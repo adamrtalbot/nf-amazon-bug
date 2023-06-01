@@ -37,3 +37,8 @@ jobs:
 
       - name: Run pipeline with test data
         run: nextflow -log ${{ matrix.NXF_VER }}_${{ matrix.NF_AMAZON }}.log run ${GITHUB_WORKSPACE}-plugins nf-amazon@${{ matrix.NF_AMAZON }}
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Tower debug log file
+          path: "*.log"
