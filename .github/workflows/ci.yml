@@ -39,6 +39,7 @@ jobs:
         run: nextflow -log ${{ matrix.NXF_VER }}_${{ matrix.NF_AMAZON }}.log run . -plugins nf-amazon@${{ matrix.NF_AMAZON }}
 
       - uses: actions/upload-artifact@v3
+        if: success() || failure()
         with:
           name: Tower debug log file
           path: "*.log"
