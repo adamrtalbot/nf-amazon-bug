@@ -1,0 +1,39 @@
+name: nf-core CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+env:
+  NXF_ANSI_LOG: false
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      matrix:
+        NXF_VER:
+          - "22.10.1"
+          - "23.04.1"
+          - "23.05.0-edge"
+        NF_AMAZON:
+          - "1.11.0"
+          - "1.16.2"
+          - "2.0.0"
+        profile:
+          - "test"
+
+    steps:
+      - name: Check out pipeline code
+        uses: actions/checkout@v3
+
+      - name: Install Nextflow
+        uses: nf-core/setup-nextflow@v1
+        with:
+          version: "${{ matrix.NXF_VER }}"
+
+      - name: Run pipeline with test data
+        run: nextflow -log ${{ matrix.NXF_VER }}_${{ matrix.NF_AMAZON }}.log run ${GITHUB_WORKSPACE}-plugins nf-amazon@${{ matrix.NF_AMAZON }}
