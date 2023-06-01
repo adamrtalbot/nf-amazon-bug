@@ -36,7 +36,7 @@ jobs:
           version: "${{ matrix.NXF_VER }}"
 
       - name: Run pipeline with test data
-        run: nextflow -log ${{ matrix.NXF_VER }}_${{ matrix.NF_AMAZON }}.log run ${GITHUB_WORKSPACE}-plugins nf-amazon@${{ matrix.NF_AMAZON }}
+        run: nextflow -log ${{ matrix.NXF_VER }}_${{ matrix.NF_AMAZON }}.log run . -plugins nf-amazon@${{ matrix.NF_AMAZON }}
 
       - uses: actions/upload-artifact@v3
         with:
